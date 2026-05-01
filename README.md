@@ -10,29 +10,18 @@ This is a plain TypeScript library, not a Pi package. Install it as a normal npm
 
 ## Why this package exists
 
-Two different Pi extensions needed the same cmux behaviors:
+This package provides a small, reusable set of cmux helpers for code that
+needs to:
 
-- detect whether Pi is running inside cmux
-- identify the calling workspace and surface
+- detect whether it is running inside cmux
+- identify the active workspace and surface
 - open splits and workspaces safely
 - build hardened Pi and shell launch commands
 - send native cmux notifications
 
-Keeping that logic duplicated caused drift.
+The point of the package is simple:
 
-```text
-Before
-├─ extension A had one copy of split-launch logic
-└─ extension B had another copy
-   └─ one copy got hardened, the other one lagged behind
-
-After
-└─ both extensions import the same shared helpers from @diversioteam/pi-cmux
-```
-
-The point of this package is simple:
-
-> one reliable implementation of cmux behavior, reused everywhere
+> make common cmux automation reliable and easy to reuse
 
 ## The problem it is solving
 
@@ -62,7 +51,7 @@ session that launched it:
 ## Mental model
 
 ```text
-consumer extension
+your code
   ├─ decides when a split/workspace/notification is useful
   └─ calls @diversioteam/pi-cmux
        ├─ cmux.ts       -> talk to cmux safely
