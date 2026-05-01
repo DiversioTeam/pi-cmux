@@ -1,0 +1,42 @@
+{
+  "name": "@diversioteam/pi-cmux",
+  "version": "0.1.0",
+  "description": "Shared cmux primitives for Pi extensions — split panes, workspace tabs, notifications, and shell hardening",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": ["dist/"],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "@mariozechner/pi-coding-agent": "*"
+  },
+  "devDependencies": {
+    "@mariozechner/pi-coding-agent": "^0.71.1",
+    "@types/node": "^24.10.0",
+    "typescript": "^5.8.0"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DiversioTeam/pi-cmux.git"
+  },
+  "homepage": "https://github.com/DiversioTeam/pi-cmux#readme",
+  "bugs": {
+    "url": "https://github.com/DiversioTeam/pi-cmux/issues"
+  },
+  "keywords": ["pi", "cmux", "terminal", "split-pane"],
+  "author": "Diversio Devs",
+  "packageManager": "npm@11.12.1"
+}
