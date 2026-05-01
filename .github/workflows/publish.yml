@@ -64,7 +64,7 @@ jobs:
 
       - name: Publish package
         if: steps.published-version.outputs.published != 'true'
-        run: npm publish
+        run: npm publish # zizmor: ignore[use-trusted-publishing]
         env:
           NODE_AUTH_TOKEN: ${{ github.token }}
 
