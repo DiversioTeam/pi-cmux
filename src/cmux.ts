@@ -1,5 +1,12 @@
 import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
 
+/**
+ * Default timeout for one cmux CLI round-trip.
+ *
+ * These calls should be quick metadata / control operations, not long-running
+ * jobs. If one hangs, callers almost always want a readable failure instead of
+ * waiting indefinitely.
+ */
 export const CMUX_TIMEOUT_MS = 5_000;
 
 export interface CmuxCallerInfo {
@@ -29,6 +36,13 @@ function parseJson<T>(text: string): T | undefined {
   }
 }
 
+/**
+ * Cheap environment check used as the first gate before attempting any cmux
+ * behavior.
+ *
+ * This does not prove that every later cmux command will succeed. It only means
+ * "this Pi process appears to be running inside a cmux-managed surface".
+ */
 export function isInsideCmux(): boolean {
   return Boolean(
     process.env.CMUX_SOCKET_PATH &&
@@ -37,6 +51,16 @@ export function isInsideCmux(): boolean {
   );
 }
 
+/**
+ * Execute one cmux command with normalized success/error shape.
+ *
+ * Why normalize here?
+ * - extension code should think in terms of cmux operations, not child-process
+ *   exit handling
+ * - callers often want stderr, stdout, and a human-readable summary together
+ * - keeping this logic in one place makes split/workspace/notify helpers easier
+ *   to audit
+ */
 export async function execCmux(
   pi: ExtensionAPI,
   args: string[],
@@ -66,6 +90,17 @@ export async function execCmux(
   };
 }
 
+/**
+ * Ask cmux which workspace and surface launched the current Pi session.
+ *
+ * First principles:
+ * - environment variables are only a hint that we are inside cmux
+ * - cmux itself is the authoritative source for where a new split should be
+ *   attached
+ *
+ * Higher-level helpers like `openSplit()` use this so they always target the
+ * live parent surface rather than re-deriving that information themselves.
+ */
 export async function identifyCaller(
   pi: ExtensionAPI,
 ): Promise<{ ok: true; caller: CmuxCallerInfo } | { ok: false; error: string }> {

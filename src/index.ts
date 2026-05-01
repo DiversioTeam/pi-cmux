@@ -1,3 +1,11 @@
+/**
+ * Stable public surface for `@diversioteam/pi-cmux`.
+ *
+ * Keep this file intentionally explicit. Future readers should be able to scan
+ * one place and answer two questions quickly:
+ * - what does the package promise to consumers?
+ * - which lower-level modules are implementation details vs public API?
+ */
 export {
   CMUX_TIMEOUT_MS,
   execCmux,

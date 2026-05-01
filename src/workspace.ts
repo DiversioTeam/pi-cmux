@@ -8,6 +8,13 @@ export interface OpenWorkspaceOptions {
   command: string;
 }
 
+/**
+ * Open a brand-new cmux workspace tab and launch one command inside it.
+ *
+ * Unlike `new-split`, cmux currently reports workspace creation as plain text,
+ * not JSON. We parse the returned `workspace:<id>` token here so callers do not
+ * all need to duplicate that detail.
+ */
 export async function openWorkspace(
   pi: ExtensionAPI,
   options: OpenWorkspaceOptions,

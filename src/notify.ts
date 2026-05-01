@@ -2,6 +2,13 @@ import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
 
 import { CMUX_TIMEOUT_MS, execCmux } from "./cmux.js";
 
+/**
+ * Send one native cmux notification.
+ *
+ * This helper stays intentionally small. It is the low-level primitive used by
+ * higher-level packages to decide *when* a notification should be sent and
+ * *what* it should say.
+ */
 export async function notify(
   pi: ExtensionAPI,
   title: string,

@@ -4,6 +4,13 @@ import { execCmux, identifyCaller } from "./cmux.js";
 
 export type SplitDirection = "right" | "down";
 
+/**
+ * Small pause between `new-split` and `respawn-pane`.
+ *
+ * cmux creates the surface first, then we replace its placeholder shell with
+ * the real command. A short delay makes that handoff more reliable across
+ * machines and avoids racing the pane bootstrap.
+ */
 export const SPLIT_BOOT_DELAY_MS = 250;
 
 interface CmuxSplitResponse {
@@ -24,6 +31,18 @@ function delay(ms: number): Promise<void> {
   });
 }
 
+/**
+ * Open a new cmux split beside the current surface and run one command there.
+ *
+ * Two-step flow:
+ * 1. `new-split` asks cmux to create the adjacent pane and returns its new
+ *    surface ref
+ * 2. `respawn-pane` replaces the placeholder shell with the real command
+ *
+ * We do it this way because it matches cmux's native model and gives callers a
+ * predictable place to inject either a Pi session or an arbitrary shell
+ * command.
+ */
 export async function openSplit(
   pi: ExtensionAPI,
   direction: SplitDirection,
