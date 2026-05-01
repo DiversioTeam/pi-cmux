@@ -4,9 +4,9 @@
 [![Workflow Security](https://github.com/DiversioTeam/pi-cmux/actions/workflows/workflow-security.yml/badge.svg)](https://github.com/DiversioTeam/pi-cmux/actions/workflows/workflow-security.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
-Shared cmux primitives for Pi extensions.
+Reusable cmux helpers for Pi-aware tooling.
 
-This is a plain TypeScript library, not a Pi package. Install it as a normal npm dependency and import it from extension code.
+This is a plain TypeScript library, not a Pi package. Install it as a normal npm dependency and import it from TypeScript or JavaScript code that uses Pi's extension APIs.
 
 ## Why this package exists
 
@@ -25,7 +25,7 @@ The point of the package is simple:
 
 ## The problem it is solving
 
-The highest-value bug class here is:
+One common failure this package helps prevent is:
 
 ```text
 open split
@@ -65,8 +65,8 @@ your code
 Another way to think about it:
 
 ```text
-Your extension owns the UX decision.
-pi-cmux owns the brittle terminal mechanics.
+Your application code decides when cmux behavior is useful.
+pi-cmux handles the low-level terminal mechanics.
 ```
 
 ## Install
@@ -76,9 +76,9 @@ This package is published to GitHub Packages, so npm needs:
 1. an `@diversioteam` registry mapping
 2. a token with package read access
 
-If you already install other `@diversioteam` packages from GitHub Packages
-(such as `@diversioteam/diversio-ds`), you may already have this set up.
-In that case, you can likely skip the `.npmrc` step below and just install the package.
+If your environment is already configured to install packages from the
+`@diversioteam` GitHub Packages scope, you can likely skip the `.npmrc` step
+below and just install the package.
 
 ### One-time npm setup (only if not already configured)
 
@@ -275,4 +275,4 @@ verify tag matches package.json
 
 - Public repo does not imply anonymous package install: GitHub Packages still requires auth.
 - The published tarball intentionally contains only `dist/` plus standard package metadata files.
-- This package is intentionally small. Consumer extensions should own UX policy; this package should own the reusable cmux mechanics.
+- This package is intentionally small. Calling code should own UX policy; this package should own the reusable cmux mechanics.
