@@ -22,7 +22,16 @@ Keeping that logic duplicated across extensions causes drift. This package centr
 
 ## Install
 
-GitHub Packages scope setup:
+This package is published to GitHub Packages, so npm needs:
+
+1. an `@diversioteam` registry mapping
+2. a token with package read access
+
+If you already install other `@diversioteam` packages from GitHub Packages
+(such as `@diversioteam/diversio-ds`), you may already have this set up.
+In that case, you can likely skip the `.npmrc` step below and just install the package.
+
+### One-time npm setup (only if not already configured)
 
 ```bash
 cat >> ~/.npmrc <<'EOF'
@@ -31,7 +40,9 @@ cat >> ~/.npmrc <<'EOF'
 EOF
 ```
 
-GitHub Packages requires authentication for install:
+### Install
+
+If your shell or CI does not already provide `NPM_TOKEN`, export it first:
 
 ```bash
 export NPM_TOKEN=...
