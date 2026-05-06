@@ -71,32 +71,13 @@ pi-cmux handles the low-level terminal mechanics.
 
 ## Install
 
-This package is published to GitHub Packages, so npm needs:
-
-1. an `@diversioteam` registry mapping
-2. a token with package read access
-
-If your environment is already configured to install packages from the
-`@diversioteam` GitHub Packages scope, you can likely skip the `.npmrc` step
-below and just install the package.
-
-### One-time npm setup (only if not already configured)
-
 ```bash
-cat >> ~/.npmrc <<'EOF'
-@diversioteam:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=${NPM_TOKEN}
-EOF
-```
-
-### Install
-
-If your shell or CI does not already provide `NPM_TOKEN`, export it first:
-
-```bash
-export NPM_TOKEN=...
 npm install @diversioteam/pi-cmux
 ```
+
+The package is published to the public npm registry. No `.npmrc` setup or
+auth tokens are needed — it installs the same way as any other public npm
+package.
 
 ## Quick usage examples
 
@@ -255,24 +236,31 @@ npm pack --dry-run
 
 ## Release
 
-Publishing is driven by version tags:
+Releases are triggered by pushing a version tag. The publish workflow
+(defined in `.github/workflows/publish.yml`) runs automatically and does:
+
+1. **Verify** — the git tag (e.g. `v0.1.0`) must match the `version` field
+   in `package.json`. This prevents accidentally publishing a mismatched
+   version.
+2. **Build** — TypeScript is compiled into `dist/`.
+3. **Idempotency check** — if this version already exists on npm, the
+   publish step is skipped. This makes the workflow safe to re-run after
+   transient failures.
+4. **Publish** — the package is pushed to the public npm registry
+   (`registry.npmjs.org`) under the `@diversioteam` org. Auth is handled
+   by an npm Automation token stored as the `NPM_TOKEN` GitHub secret.
+5. **GitHub Release** — a release is created using auto-generated notes
+   (merged PRs since the last tag).
+
+To cut a release:
 
 ```bash
 git tag v0.1.0
 git push origin v0.1.0
 ```
 
-The publish workflow then:
-
-```text
-verify tag matches package.json
-  -> build
-  -> publish to GitHub Packages
-  -> create GitHub release notes
-```
-
 ## Notes
 
-- Public repo does not imply anonymous package install: GitHub Packages still requires auth.
+- The package is published to the public npm registry — no auth required.
 - The published tarball intentionally contains only `dist/` plus standard package metadata files.
 - This package is intentionally small. Calling code should own UX policy; this package should own the reusable cmux mechanics.
