@@ -13,7 +13,7 @@
 #     npm install @diversio/pi-cmux
 #
 # Required secrets:
-#   NPM_TOKEN — an npm Automation token from the @diversio org.
+#   DIVERSIO_TEAM_NPM_TOKEN — an npm Automation token from the @diversio org.
 #   Generate at https://www.npmjs.com/settings/diversio/tokens
 #   and add to https://github.com/DiversioTeam/pi-cmux/settings/secrets/actions
 # ---------------------------------------------------------------------------
@@ -94,7 +94,7 @@ jobs:
       - name: Check whether version is already published
         id: published-version
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.DIVERSIO_TEAM_NPM_TOKEN }}
         run: |
           set -euo pipefail
           VERSION="$(node -p "require('./package.json').version")"
@@ -109,7 +109,7 @@ jobs:
       # is always fresh at publish time.
       #
       # zizmor: ignore[use-trusted-publishing] — we intentionally use an
-      # npm Automation token (NPM_TOKEN) rather than OIDC trusted
+      # npm Automation token (DIVERSIO_TEAM_NPM_TOKEN) rather than OIDC trusted
       # publishing. npm's trusted publishing requires a GitHub Actions
       # specific linkage that we will adopt separately.
       - name: Publish package
@@ -119,7 +119,7 @@ jobs:
         # with a misleading 404 if the account lacks a paid plan.
         run: npm publish --access public # zizmor: ignore[use-trusted-publishing]
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.DIVERSIO_TEAM_NPM_TOKEN }}
 
       # Create a GitHub Release for the tag. Uses the auto-generated
       # release notes (--generate-notes) which pulls in merged PRs since
