@@ -1,5 +1,5 @@
 {
-  "name": "@diversioteam/pi-cmux",
+  "name": "@diversio/pi-cmux",
   "version": "0.1.0",
   "description": "Shared cmux primitives for Pi extensions — split panes, workspace tabs, notifications, and shell hardening",
   "license": "MIT",

@@ -7,14 +7,14 @@
 #   3. Publishes the package to the public npm registry (registry.npmjs.org)
 #   4. Creates a GitHub Release with auto-generated notes
 #
-# The package lives in the @diversioteam org on npmjs.org. Because it is
+# The package lives in the @diversio org on npmjs.org. Because it is
 # public, consumers need zero configuration — just:
 #
-#     npm install @diversioteam/pi-cmux
+#     npm install @diversio/pi-cmux
 #
 # Required secrets:
-#   NPM_TOKEN — an npm Automation token from the @diversioteam org.
-#   Generate at https://www.npmjs.com/settings/diversioteam/tokens
+#   NPM_TOKEN — an npm Automation token from the @diversio org.
+#   Generate at https://www.npmjs.com/settings/diversio/tokens
 #   and add to https://github.com/DiversioTeam/pi-cmux/settings/secrets/actions
 # ---------------------------------------------------------------------------
 
@@ -98,7 +98,7 @@ jobs:
         run: |
           set -euo pipefail
           VERSION="$(node -p "require('./package.json').version")"
-          if npm view "@diversioteam/pi-cmux@${VERSION}" version --registry=https://registry.npmjs.org >/dev/null 2>&1; then
+          if npm view "@diversio/pi-cmux@${VERSION}" version --registry=https://registry.npmjs.org >/dev/null 2>&1; then
             echo "published=true" >> "$GITHUB_OUTPUT"
           else
             echo "published=false" >> "$GITHUB_OUTPUT"

@@ -1,4 +1,4 @@
-# @diversioteam/pi-cmux
+# @diversio/pi-cmux
 
 [![CI](https://github.com/DiversioTeam/pi-cmux/actions/workflows/ci.yml/badge.svg)](https://github.com/DiversioTeam/pi-cmux/actions/workflows/ci.yml)
 [![Workflow Security](https://github.com/DiversioTeam/pi-cmux/actions/workflows/workflow-security.yml/badge.svg)](https://github.com/DiversioTeam/pi-cmux/actions/workflows/workflow-security.yml)
@@ -41,7 +41,7 @@ session that launched it:
 - the `pi` binary may not be discoverable by name
 - a short-lived failure may exit before the human can read it
 
-`@diversioteam/pi-cmux` hardens that path by:
+`@diversio/pi-cmux` hardens that path by:
 
 - reusing the current session's PATH
 - resolving the safest Pi launcher it can find
@@ -53,7 +53,7 @@ session that launched it:
 ```text
 your code
   ├─ decides when a split/workspace/notification is useful
-  └─ calls @diversioteam/pi-cmux
+  └─ calls @diversio/pi-cmux
        ├─ cmux.ts       -> talk to cmux safely
        ├─ launch.ts     -> build reliable shell / Pi commands
        ├─ split.ts      -> open adjacent panes
@@ -72,7 +72,7 @@ pi-cmux handles the low-level terminal mechanics.
 ## Install
 
 ```bash
-npm install @diversioteam/pi-cmux
+npm install @diversio/pi-cmux
 ```
 
 The package is published to the public npm registry. No `.npmrc` setup or
@@ -84,7 +84,7 @@ package.
 ### 1. Open a new Pi split
 
 ```ts
-import { buildPiCommand, isInsideCmux, openSplit } from "@diversioteam/pi-cmux";
+import { buildPiCommand, isInsideCmux, openSplit } from "@diversio/pi-cmux";
 
 if (isInsideCmux()) {
   await openSplit(pi, "right", buildPiCommand(process.cwd(), {
@@ -105,7 +105,7 @@ current Pi session
 ### 2. Open a shell-command split
 
 ```ts
-import { buildShellCommand, openSplit } from "@diversioteam/pi-cmux";
+import { buildShellCommand, openSplit } from "@diversio/pi-cmux";
 
 await openSplit(pi, "down", buildShellCommand(process.cwd(), "npm test"));
 ```
@@ -115,7 +115,7 @@ Use this when you want a helper terminal lane instead of another Pi lane.
 ### 3. Open a workspace tab
 
 ```ts
-import { buildPiCommand, openWorkspace } from "@diversioteam/pi-cmux";
+import { buildPiCommand, openWorkspace } from "@diversio/pi-cmux";
 
 await openWorkspace(pi, {
   cwd: process.cwd(),
@@ -129,7 +129,7 @@ await openWorkspace(pi, {
 ### 4. Send a native notification
 
 ```ts
-import { notify } from "@diversioteam/pi-cmux";
+import { notify } from "@diversio/pi-cmux";
 
 await notify(pi, "Review finished", "backend", "No correctness issues found.");
 ```
@@ -247,7 +247,7 @@ Releases are triggered by pushing a version tag. The publish workflow
    publish step is skipped. This makes the workflow safe to re-run after
    transient failures.
 4. **Publish** — the package is pushed to the public npm registry
-   (`registry.npmjs.org`) under the `@diversioteam` org. Auth is handled
+   (`registry.npmjs.org`) under the `@diversio` org. Auth is handled
    by an npm Automation token stored as the `NPM_TOKEN` GitHub secret.
 5. **GitHub Release** — a release is created using auto-generated notes
    (merged PRs since the last tag).

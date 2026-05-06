@@ -2,7 +2,7 @@
 
 ## What This Repo Is
 
-`@diversioteam/pi-cmux` is the single source of truth for cmux primitives used by Pi extensions. It provides hardened shell-command building, split pane launching, workspace tab creation, and notifications via the native cmux CLI.
+`@diversio/pi-cmux` is the single source of truth for cmux primitives used by Pi extensions. It provides hardened shell-command building, split pane launching, workspace tab creation, and notifications via the native cmux CLI.
 
 ## Why It Exists
 

@@ -1,5 +1,5 @@
 /**
- * Stable public surface for `@diversioteam/pi-cmux`.
+ * Stable public surface for `@diversio/pi-cmux`.
  *
  * Keep this file intentionally explicit. Future readers should be able to scan
  * one place and answer two questions quickly:
