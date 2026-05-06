@@ -114,7 +114,10 @@ jobs:
       # specific linkage that we will adopt separately.
       - name: Publish package
         if: steps.published-version.outputs.published != 'true'
-        run: npm publish # zizmor: ignore[use-trusted-publishing]
+        # --access public is required because scoped packages (@diversio/...)
+        # default to private on npm. Without it, npm rejects the publish
+        # with a misleading 404 if the account lacks a paid plan.
+        run: npm publish --access public # zizmor: ignore[use-trusted-publishing]
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
